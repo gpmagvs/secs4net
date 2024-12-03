@@ -8,7 +8,7 @@ namespace Secs4Net;
 public abstract partial class Item : IEquatable<Item>, IDisposable
 {
     public static Encoding JIS8Encoding { get; set; } = Encoding.UTF8;
-    public static Encoding ASCIIEncoding { get; set; } = Encoding.ASCII;
+    public static Encoding ASCIIEncoding { get; set; } = Encoding.GetEncoding("big5");
 
     public SecsFormat Format { get; }
 
