@@ -10,6 +10,8 @@ public abstract partial class Item : IEquatable<Item>, IDisposable
     public static Encoding JIS8Encoding { get; set; } = Encoding.UTF8;
     public static Encoding ASCIIEncoding { get; set; } = Encoding.GetEncoding("big5");
 
+    public string Comment { get; set; } = string.Empty;
+
     public SecsFormat Format { get; }
 
     static Item()
@@ -23,6 +25,11 @@ public abstract partial class Item : IEquatable<Item>, IDisposable
     private protected Item(SecsFormat format)
     {
         Format = format;
+    }
+    private protected Item(SecsFormat format, string comment)
+    {
+        Format = format;
+        Comment = comment;
     }
 
     public abstract int Count { get; }

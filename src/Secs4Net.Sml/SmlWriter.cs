@@ -124,7 +124,11 @@ public static class SmlWriter
             default:
                 throw new ArgumentOutOfRangeException(nameof(item.Format), item.Format, "invalid SecsFormat value");
         }
-        writer.WriteLine('>');
+
+        if (string.IsNullOrEmpty(item.Comment))
+            writer.WriteLine('>');
+        else
+            writer.WriteLine($"> *{item.Comment}");
     }
 
     public static async Task WriteAsync(this TextWriter writer, Item item, int indent = 4)

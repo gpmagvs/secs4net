@@ -1,5 +1,6 @@
 ﻿using System.Buffers;
 using System.Runtime.CompilerServices;
+using System.Xml.Linq;
 using static System.Runtime.CompilerServices.MethodImplOptions;
 
 namespace Secs4Net;
@@ -9,32 +10,43 @@ partial class Item
     public static Item L(IEnumerable<Item> items) => L(items.ToArray());
     public static Item L(params Item[] items) => items.Length > 0 ? new ListItem(items) : EmptyL;
 
+    public static Item A(string? value, string? comment = "") => string.IsNullOrEmpty(value) ? EmptyA : new StringItem(SecsFormat.ASCII, value, comment);
     public static Item A(string? value) => string.IsNullOrEmpty(value) ? EmptyA : new StringItem(SecsFormat.ASCII, value);
     public static Item J(string? value) => string.IsNullOrEmpty(value) ? EmptyJ : new StringItem(SecsFormat.JIS8, value);
 
+    [MethodImpl(AggressiveInlining)] public static Item B(byte value, string comment) => B((new byte[] { value }).AsMemory(), comment);
     [MethodImpl(AggressiveInlining)] public static Item B(params byte[] value) => B(value.AsMemory());
     [MethodImpl(AggressiveInlining)] public static Item B(IEnumerable<byte> value) => B(value.ToArray());
     [MethodImpl(AggressiveInlining)] public static Item B(Memory<byte> value) => new MemoryItem<byte>(SecsFormat.Binary, value);
+    [MethodImpl(AggressiveInlining)] public static Item B(Memory<byte> value, string comment) => new MemoryItem<byte>(SecsFormat.Binary, value, comment);
     [MethodImpl(AggressiveInlining)] public static Item B(IMemoryOwner<byte> valueOwner) => new MemoryOwnerItem<byte>(SecsFormat.Binary, valueOwner);
 
+    [MethodImpl(AggressiveInlining)] public static Item U1(byte value, string comment) => U1(new byte[] { value }.AsMemory(), comment);
     [MethodImpl(AggressiveInlining)] public static Item U1(params byte[] value) => U1(value.AsMemory());
     [MethodImpl(AggressiveInlining)] public static Item U1(IEnumerable<byte> value) => U1(value.ToArray());
     [MethodImpl(AggressiveInlining)] public static Item U1(Memory<byte> value) => new MemoryItem<byte>(SecsFormat.U1, value);
+    [MethodImpl(AggressiveInlining)] public static Item U1(Memory<byte> value, string comment) => new MemoryItem<byte>(SecsFormat.U1, value, comment);
     [MethodImpl(AggressiveInlining)] public static Item U1(IMemoryOwner<byte> valueOwner) => new MemoryOwnerItem<byte>(SecsFormat.U1, valueOwner);
 
+    [MethodImpl(AggressiveInlining)] public static Item U2(ushort value, string comment) => U2((new ushort[] { value }).AsMemory(), comment);
     [MethodImpl(AggressiveInlining)] public static Item U2(params ushort[] value) => U2(value.AsMemory());
     [MethodImpl(AggressiveInlining)] public static Item U2(IEnumerable<ushort> value) => U2(value.ToArray());
     [MethodImpl(AggressiveInlining)] public static Item U2(Memory<ushort> value) => new MemoryItem<ushort>(SecsFormat.U2, value);
+    [MethodImpl(AggressiveInlining)] public static Item U2(Memory<ushort> value, string comment) => new MemoryItem<ushort>(SecsFormat.U2, value, comment);
     [MethodImpl(AggressiveInlining)] public static Item U2(IMemoryOwner<ushort> valueOwner) => new MemoryOwnerItem<ushort>(SecsFormat.U2, valueOwner);
 
+    [MethodImpl(AggressiveInlining)] public static Item U4(uint value, string comment) => U4((new uint[] { value }).AsMemory(), comment);
     [MethodImpl(AggressiveInlining)] public static Item U4(params uint[] value) => U4(value.AsMemory());
     [MethodImpl(AggressiveInlining)] public static Item U4(IEnumerable<uint> value) => U4(value.ToArray());
     [MethodImpl(AggressiveInlining)] public static Item U4(Memory<uint> value) => new MemoryItem<uint>(SecsFormat.U4, value);
+    [MethodImpl(AggressiveInlining)] public static Item U4(Memory<uint> value, string comment) => new MemoryItem<uint>(SecsFormat.U4, value, comment);
     [MethodImpl(AggressiveInlining)] public static Item U4(IMemoryOwner<uint> valueOwner) => new MemoryOwnerItem<uint>(SecsFormat.U4, valueOwner);
 
+    [MethodImpl(AggressiveInlining)] public static Item U8(ulong value, string comment) => U8((new ulong[] { value }).AsMemory(), comment);
     [MethodImpl(AggressiveInlining)] public static Item U8(params ulong[] value) => U8(value.AsMemory());
     [MethodImpl(AggressiveInlining)] public static Item U8(IEnumerable<ulong> value) => U8(value.ToArray());
     [MethodImpl(AggressiveInlining)] public static Item U8(Memory<ulong> value) => new MemoryItem<ulong>(SecsFormat.U8, value);
+    [MethodImpl(AggressiveInlining)] public static Item U8(Memory<ulong> value, string comment) => new MemoryItem<ulong>(SecsFormat.U8, value, comment);
     [MethodImpl(AggressiveInlining)] public static Item U8(IMemoryOwner<ulong> valueOwner) => new MemoryOwnerItem<ulong>(SecsFormat.U8, valueOwner);
 
     [MethodImpl(AggressiveInlining)] public static Item I1(params sbyte[] value) => I1(value.AsMemory());
@@ -67,9 +79,11 @@ partial class Item
     [MethodImpl(AggressiveInlining)] public static Item F8(Memory<double> value) => new MemoryItem<double>(SecsFormat.F8, value);
     [MethodImpl(AggressiveInlining)] public static Item F8(IMemoryOwner<double> valueOwner) => new MemoryOwnerItem<double>(SecsFormat.F8, valueOwner);
 
+    [MethodImpl(AggressiveInlining)] public static Item Boolean(bool value, string comment) => Boolean((new bool[] { value }).AsMemory(), comment);
     [MethodImpl(AggressiveInlining)] public static Item Boolean(params bool[] value) => Boolean(value.AsMemory());
     [MethodImpl(AggressiveInlining)] public static Item Boolean(IEnumerable<bool> value) => Boolean(value.ToArray());
     [MethodImpl(AggressiveInlining)] public static Item Boolean(Memory<bool> value) => new MemoryItem<bool>(SecsFormat.Boolean, value);
+    [MethodImpl(AggressiveInlining)] public static Item Boolean(Memory<bool> value, string comment) => new MemoryItem<bool>(SecsFormat.Boolean, value, comment);
     [MethodImpl(AggressiveInlining)] public static Item Boolean(IMemoryOwner<bool> valueOwner) => new MemoryOwnerItem<bool>(SecsFormat.Boolean, valueOwner);
 
     [MethodImpl(AggressiveInlining)] public static Item L() => EmptyL;

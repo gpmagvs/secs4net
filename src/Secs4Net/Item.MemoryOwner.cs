@@ -12,6 +12,10 @@ partial class Item
             : base(format, memoryOwner.Memory)
             => _owner = memoryOwner;
 
+        internal MemoryOwnerItem(SecsFormat format, IMemoryOwner<T> memoryOwner, string comment)
+            : base(format, memoryOwner.Memory, comment)
+            => _owner = memoryOwner;
+
         public override void Dispose()
             => _owner.Dispose();
     }

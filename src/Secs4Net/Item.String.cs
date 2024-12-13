@@ -12,6 +12,10 @@ partial class Item
     {
         private readonly string _value;
 
+        internal StringItem(SecsFormat format, string value, string comment)
+            : base(format, comment)
+            => _value = value;
+
         internal StringItem(SecsFormat format, string value)
             : base(format)
             => _value = value;

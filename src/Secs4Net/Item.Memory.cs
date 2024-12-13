@@ -17,6 +17,11 @@ public partial class Item
             : base(format)
             => _value = value;
 
+
+        internal MemoryItem(SecsFormat format, Memory<T> value, string comment)
+            : base(format, comment)
+            => _value = value;
+
         public sealed override int Count => _value.Length;
 
         public sealed override ref TResult FirstValue<TResult>()
