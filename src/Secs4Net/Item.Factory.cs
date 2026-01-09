@@ -10,7 +10,7 @@ partial class Item
     public static Item L(IEnumerable<Item> items) => L(items.ToArray());
     public static Item L(params Item[] items) => items.Length > 0 ? new ListItem(items) : EmptyL;
 
-    public static Item A(string? value, string? comment = "") => string.IsNullOrEmpty(value) ? EmptyA : new StringItem(SecsFormat.ASCII, value, comment);
+    public static Item A(string? value, string? comment = "") => new StringItem(SecsFormat.ASCII, string.IsNullOrEmpty(value) ? "" : value, comment);
     public static Item A(string? value) => string.IsNullOrEmpty(value) ? EmptyA : new StringItem(SecsFormat.ASCII, value);
     public static Item J(string? value) => string.IsNullOrEmpty(value) ? EmptyJ : new StringItem(SecsFormat.JIS8, value);
 
